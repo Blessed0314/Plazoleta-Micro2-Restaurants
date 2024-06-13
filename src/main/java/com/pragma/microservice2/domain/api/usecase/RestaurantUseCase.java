@@ -4,6 +4,8 @@ import com.pragma.microservice2.domain.api.IRestaurantServicePort;
 import com.pragma.microservice2.domain.model.Restaurant;
 import com.pragma.microservice2.domain.spi.IRestaurantPersistencePort;
 
+import java.util.List;
+
 public class RestaurantUseCase implements IRestaurantServicePort {
 
     private final IRestaurantPersistencePort restaurantPersistencePort;
@@ -15,5 +17,10 @@ public class RestaurantUseCase implements IRestaurantServicePort {
     @Override
     public void saveRestaurant(Restaurant restaurant) {
         restaurantPersistencePort.saveRestaurant(restaurant);
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurants(Integer page, Integer size, boolean ascendingFlag) {
+        return restaurantPersistencePort.getAllRestaurants(page, size, ascendingFlag);
     }
 }
