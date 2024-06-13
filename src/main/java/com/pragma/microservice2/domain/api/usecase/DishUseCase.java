@@ -4,6 +4,8 @@ import com.pragma.microservice2.domain.api.IDishServicePort;
 import com.pragma.microservice2.domain.model.Dish;
 import com.pragma.microservice2.domain.spi.IDishPersistencePort;
 
+import java.util.List;
+
 public class DishUseCase implements IDishServicePort {
 
     private final IDishPersistencePort dishPersistencePort;
@@ -25,5 +27,10 @@ public class DishUseCase implements IDishServicePort {
     @Override
     public void patchIsActiveDish(Long id) {
         dishPersistencePort.patchIsActiveDish(id);
+    }
+
+    @Override
+    public List<Dish> getAllDishes(Integer page, Integer size, String category) {
+        return dishPersistencePort.getAllDishes(page, size, category);
     }
 }

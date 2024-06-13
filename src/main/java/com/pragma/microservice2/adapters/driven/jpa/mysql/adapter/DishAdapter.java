@@ -10,9 +10,13 @@ import com.pragma.microservice2.adapters.security.CustomUserDetail;
 import com.pragma.microservice2.domain.model.Dish;
 import com.pragma.microservice2.domain.spi.IDishPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -73,6 +77,15 @@ public class DishAdapter implements IDishPersistencePort {
             throw new WrongOwnerException();
         }
         dishEntity.setActive(!dishEntity.isActive());
+    }
+
+    @Override
+    public List<Dish> getAllDishes(Integer page, Integer size, String category) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<DishEntity> dishes = "all".equalsIgnoreCase(category)
+                ? dishRepository.findAll(pageable).getContent()
+                : dishRepository.findAllByCategory(category, pageable).getContent();
+        return dishEntityMapper.toModelList(dishes);
     }
 
     private boolean validateOwner (String nit){

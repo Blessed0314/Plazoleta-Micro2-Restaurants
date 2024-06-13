@@ -13,11 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/dish")
 @RequiredArgsConstructor
 @PreAuthorize("denyAll()")
 public class IDishRestControllerAdapter {
+
     private final IDishServicePort dishServicePort;
 
     private final IDishResponseMapper dishResponseMapper;
@@ -41,5 +44,14 @@ public class IDishRestControllerAdapter {
     public ResponseEntity<Void> deleteDish(@PathVariable Long id){
         dishServicePort.patchIsActiveDish(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @GetMapping("/")
+    public ResponseEntity<List<DishResponse>> getDishList(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam(defaultValue = "all") String category){
+        return ResponseEntity.ok(dishResponseMapper.toDishResponseList(dishServicePort.getAllDishes(page, size, category)));
     }
 }
