@@ -1,6 +1,6 @@
 package com.pragma.microservice2.configuration.exceptionhandler;
 
-import com.pragma.microservice2.adapters.driven.jpa.mysql.exception.RestaurantByNameAlreadyExistsException;
+import com.pragma.microservice2.adapters.driven.jpa.mysql.exception.*;
 import com.pragma.microservice2.configuration.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 @RequiredArgsConstructor
 public class ControllerAdvisor {
+
+    @ExceptionHandler(BindException.class)
     public ResponseEntity<ExceptionResponse> handleValidationException(BindException bindException) {
         StringBuilder errorMessage = new StringBuilder();
         for (FieldError error : bindException.getFieldErrors()) {
@@ -38,10 +40,46 @@ public class ControllerAdvisor {
         ));
     }
 
+    @ExceptionHandler(NitAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleNitAlreadyExistsException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.NIT_ALREADY_EXISTS_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
     @ExceptionHandler(RestaurantByNameAlreadyExistsException.class)
     public ResponseEntity<ExceptionResponse> handleRestaurantByNameAlreadyExistsException() {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 Constants.RESTAURANT_BY_NAME_ALREADY_EXISTS_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(DishNameAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleDishNameAlreadyExistsException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.DISH_BY_NAME_ALREADY_EXISTS_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(RestaurantNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleRestaurantNotFoundException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.RESTAURANT_NOT_FOUND_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(WrongOwnerException.class)
+    public ResponseEntity<ExceptionResponse> handleWrongOwnerException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.WRONG_OWNER_EXCEPTION_MESSAGE,
                 HttpStatus.BAD_REQUEST.toString(),
                 LocalDateTime.now()
         ));

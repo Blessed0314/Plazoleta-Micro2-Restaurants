@@ -1,6 +1,7 @@
 package com.pragma.microservice2.adapters.driven.jpa.mysql.adapter;
 
 import com.pragma.microservice2.adapters.driven.jpa.mysql.entity.RestaurantEntity;
+import com.pragma.microservice2.adapters.driven.jpa.mysql.exception.NitAlreadyExistsException;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.exception.RestaurantByNameAlreadyExistsException;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.IRestaurantEntityMapper;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IRestaurantRepository;
@@ -20,6 +21,9 @@ public class RestaurantAdapter implements IRestaurantPersistencePort {
     @Override
     public void saveRestaurant(Restaurant restaurant) {
 
+        if(restaurantRepository.existsById(restaurant.getNit())){
+            throw new NitAlreadyExistsException();
+        }
         if(restaurantRepository.existsByName(restaurant.getName())){
             throw new RestaurantByNameAlreadyExistsException();
         }

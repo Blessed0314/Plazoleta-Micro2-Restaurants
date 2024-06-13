@@ -1,8 +1,8 @@
 package com.pragma.microservice2.adapters.driving.http.controller;
 
-import com.pragma.microservice2.adapters.driving.http.dto.request.AddRestaurantRequest;
-import com.pragma.microservice2.adapters.driving.http.mapper.IRestaurantRequestMapper;
-import com.pragma.microservice2.domain.api.IRestaurantServicePort;
+import com.pragma.microservice2.adapters.driving.http.dto.request.AddDishRequest;
+import com.pragma.microservice2.adapters.driving.http.mapper.IDishRequestMapper;
+import com.pragma.microservice2.domain.api.IDishServicePort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping("/dish")
 @RequiredArgsConstructor
 @PreAuthorize("denyAll()")
-public class IRestaurantRestControllerAdapter {
-
-    private final IRestaurantServicePort restaurantServicePort;
-    private final IRestaurantRequestMapper restaurantRequestMapper;
+public class IDishRestControllerAdapter {
+    private final IDishServicePort dishServicePort;
+    private final IDishRequestMapper dishRequestMapper;
 
     @PreAuthorize("hasRole('OWNER')")
     @PostMapping("/")
-    public ResponseEntity<Void> addRestaurant(@Valid @RequestBody AddRestaurantRequest request){
-        restaurantServicePort.saveRestaurant(restaurantRequestMapper.addRequestToRestaurant(request));
+    public ResponseEntity<Void> addDish(@Valid @RequestBody AddDishRequest request){
+        dishServicePort.saveDish(dishRequestMapper.addRequestToDish(request));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 }

@@ -17,7 +17,7 @@ public class AddRestaurantRequest {
     private final String nit;
 
     @NotBlank(message = MessageConstants.FIELD_NAME_NULL_MESSAGE)
-    @Pattern(regexp = "^(?=.*[a-zA-Z])[a-zA-Z0-9]+$", message = MessageConstants.FIELD_NAME_ONLY_NUMBERS_MESSAGE)
+    @Pattern(regexp = "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$", message = MessageConstants.FIELD_NAME_ONLY_NUMBERS_MESSAGE)
     private final String name;
 
     @NotBlank(message = MessageConstants.FIELD_ADDRESS_NULL_MESSAGE)

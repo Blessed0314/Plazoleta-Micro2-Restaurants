@@ -13,4 +13,11 @@ public class MessageConstants {
     public static final String FIELD_PHONE_ONLY_NUMBERS_MESSAGE = "Field 'phone' can only have numbers or '+' before the number";
     public static final String FIELD_LOGO_NULL_MESSAGE = "Field 'logo' cannot be null";
     public static final String FIELD_LOGO_NOT_URL_MESSAGE = "Field 'logo' is not a valid URL";
+    public static final String FIELD_PRICE_NULL_MESSAGE = "Field 'price' cannot be null";
+    public static final String FIELD_PRICE_NEGATIVE_MESSAGE = "Field 'price' cannot be negative";
+    public static final String FIELD_DESCRIPTION_NULL_MESSAGE = "Field 'description' cannot be null";
+    public static final String FIELD_IMAGE_NULL_MESSAGE = "Field 'image' cannot be null";
+    public static final String FIELD_IMAGE_NOT_URL_MESSAGE = "Field 'image' is not a valid URL";
+    public static final String FIELD_CATEGORY_NULL_MESSAGE = "Field 'category' cannot be null";
+    public static final String FIELD_RESTAURANT_NULL_MESSAGE = "Field 'restaurant' cannot be null";
 }
