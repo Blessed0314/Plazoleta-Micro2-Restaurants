@@ -21,4 +21,9 @@ public class DishUseCase implements IDishServicePort {
     public Dish updateDish(Dish dish) {
         return dishPersistencePort.updateDish(dish);
     }
+
+    @Override
+    public void patchIsActiveDish(Long id) {
+        dishPersistencePort.patchIsActiveDish(id);
+    }
 }

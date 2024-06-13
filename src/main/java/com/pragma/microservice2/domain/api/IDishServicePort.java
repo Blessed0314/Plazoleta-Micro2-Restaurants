@@ -5,4 +5,5 @@ import com.pragma.microservice2.domain.model.Dish;
 public interface IDishServicePort {
     void saveDish(Dish dish);
     Dish updateDish(Dish dish);
+    void patchIsActiveDish(Long id);
 }

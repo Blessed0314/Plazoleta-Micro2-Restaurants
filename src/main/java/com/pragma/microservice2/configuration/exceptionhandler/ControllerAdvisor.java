@@ -86,9 +86,9 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(NullParametersException.class)
-    public ResponseEntity<ExceptionResponse> handleNullParametersException() {
+    public ResponseEntity<ExceptionResponse> handleNullParametersException(NullParametersException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
-                Constants.NULL_PARAMETERS_EXCEPTION_MESSAGE,
+                exception.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),
                 LocalDateTime.now()
         ));

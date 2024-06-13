@@ -36,4 +36,12 @@ public class IDishRestControllerAdapter {
         return ResponseEntity.ok(dishResponseMapper.toDishResponse(dishServicePort.updateDish(dishRequestMapper.updateRequestToDish(request))));
     }
 
+    @PreAuthorize("hasRole('OWNER')")
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> deleteDish(@PathVariable Long id){
+        dishServicePort.patchIsActiveDish(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    
+
 }

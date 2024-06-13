@@ -46,7 +46,7 @@ public class DishAdapter implements IDishPersistencePort {
     @Override
     public Dish updateDish(Dish dish) {
         if(dish.getPrice() == null && (dish.getDescription()==null || dish.getDescription().isEmpty())){
-            throw new NullParametersException();
+            throw new NullParametersException("'Price' or 'Description' must be provided");
         }
 
         if(validateOwner(dish.getRestaurant().getNit())){
@@ -61,6 +61,18 @@ public class DishAdapter implements IDishPersistencePort {
             dishEntity.setDescription(dish.getDescription());
         }
         return dishEntityMapper.toModel(dishRepository.save(dishEntity));
+    }
+
+    @Override
+    public void patchIsActiveDish(Long id) {
+        if(id == null){
+            throw new NullParametersException("Id must be provided");
+        }
+        DishEntity dishEntity = dishRepository.findById(id).orElseThrow(DishNotFoundException::new);
+        if(validateOwner(dishEntity.getRestaurant().getNit())){
+            throw new WrongOwnerException();
+        }
+        dishEntity.setActive(!dishEntity.isActive());
     }
 
     private boolean validateOwner (String nit){
