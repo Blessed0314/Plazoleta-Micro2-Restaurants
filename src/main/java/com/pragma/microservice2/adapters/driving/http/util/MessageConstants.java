@@ -20,4 +20,5 @@ public class MessageConstants {
     public static final String FIELD_IMAGE_NOT_URL_MESSAGE = "Field 'image' is not a valid URL";
     public static final String FIELD_CATEGORY_NULL_MESSAGE = "Field 'category' cannot be null";
     public static final String FIELD_RESTAURANT_NULL_MESSAGE = "Field 'restaurant' cannot be null";
+    public static final String FIELD_ID_NULL_MESSAGE = "Field 'id' cannot be null";
 }

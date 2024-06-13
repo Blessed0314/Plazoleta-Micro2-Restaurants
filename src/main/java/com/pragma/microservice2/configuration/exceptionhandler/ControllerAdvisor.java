@@ -84,4 +84,14 @@ public class ControllerAdvisor {
                 LocalDateTime.now()
         ));
     }
+
+    @ExceptionHandler(NullParametersException.class)
+    public ResponseEntity<ExceptionResponse> handleNullParametersException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.NULL_PARAMETERS_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
 }

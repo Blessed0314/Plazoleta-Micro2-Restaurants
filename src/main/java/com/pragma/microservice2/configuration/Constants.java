@@ -11,4 +11,5 @@ public class Constants {
     public static final String DISH_BY_NAME_ALREADY_EXISTS_EXCEPTION_MESSAGE = "This dish's name already exists";
     public static final String RESTAURANT_NOT_FOUND_EXCEPTION_MESSAGE = "This restaurant not found";
     public static final String WRONG_OWNER_EXCEPTION_MESSAGE = "You are not the owner of this restaurant";
+    public static final String NULL_PARAMETERS_EXCEPTION_MESSAGE = "Must include at least one of the 'price' or 'description' parameters";
 }
