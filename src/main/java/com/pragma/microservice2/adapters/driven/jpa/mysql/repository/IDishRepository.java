@@ -12,5 +12,4 @@ public interface IDishRepository extends JpaRepository<DishEntity, Long>{
     Optional<DishEntity> findByRestaurant_Name(String restaurantName);
 
     Page<DishEntity> findAllByCategory(String category, Pageable pageable);
-    Page<DishEntity> findAll(Pageable pageable);
 }

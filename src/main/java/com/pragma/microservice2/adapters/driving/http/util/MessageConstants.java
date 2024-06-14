@@ -21,4 +21,8 @@ public class MessageConstants {
     public static final String FIELD_CATEGORY_NULL_MESSAGE = "Field 'category' cannot be null";
     public static final String FIELD_RESTAURANT_NULL_MESSAGE = "Field 'restaurant' cannot be null";
     public static final String FIELD_ID_NULL_MESSAGE = "Field 'id' cannot be null";
+    public static final String FIELD_DISH_NULL_MESSAGE = "Field 'dish' cannot be null";
+    public static final String FIELD_QUANTITY_NULL_MESSAGE = "Field 'quantity' cannot be null";
+    public static final String FIELD_QUANTITY_NEGATIVE_MESSAGE = "Field 'quantity' cannot be negative";
+    public static final String FIELD_ORDER_ITEMS_EMPTY_MESSAGE = "Field 'orderItems' cannot be empty";
 }
