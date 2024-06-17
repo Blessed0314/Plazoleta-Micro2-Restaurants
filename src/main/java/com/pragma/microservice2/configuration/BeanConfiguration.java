@@ -4,10 +4,7 @@ import com.pragma.microservice2.adapters.driven.jpa.mysql.adapter.DishAdapter;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.adapter.OrderAdapter;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.adapter.OrderItemAdapter;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.adapter.RestaurantAdapter;
-import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.IDishEntityMapper;
-import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.IOrderEntityMapper;
-import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.IOrderItemEntityMapper;
-import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.IRestaurantEntityMapper;
+import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.*;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IDishRepository;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IOrderItemRepository;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IOrderRepository;
@@ -44,6 +41,8 @@ public class BeanConfiguration {
     private final IOrderRepository orderRepository;
     private final IOrderEntityMapper orderEntityMapper;
 
+    private final ManualMapper manualMapper;
+
     @Bean
     public IRestaurantPersistencePort restaurantPersistencePort() {
         return new RestaurantAdapter(restaurantRepository, restaurantEntityMapper);
@@ -73,7 +72,7 @@ public class BeanConfiguration {
 
     @Bean
     public IOrderPersistencePort orderPersistencePort() {
-        return new OrderAdapter(orderRepository, orderEntityMapper, orderItemRepository, orderItemEntityMapper);
+        return new OrderAdapter(orderRepository, orderEntityMapper, orderItemRepository, orderItemEntityMapper, manualMapper);
     }
     @Bean
     public IOrderServicePort orderServicePort() {

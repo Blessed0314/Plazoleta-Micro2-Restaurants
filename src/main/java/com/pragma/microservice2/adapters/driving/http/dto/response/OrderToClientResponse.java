@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class OrderResponse {
+public class OrderToClientResponse {
     private final RestaurantToOrderResponse restaurant;
     private final List<OrderItemResponse> orderItems;
 }

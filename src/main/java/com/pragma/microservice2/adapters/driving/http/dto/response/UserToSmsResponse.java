@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class RestaurantResponse {
-    private final String nit;
-    private final String name;
-    private final String logo;
+public class UserToSmsResponse {
+    private String name;
+    private String lastname;
+    private String cellphone;
 }
