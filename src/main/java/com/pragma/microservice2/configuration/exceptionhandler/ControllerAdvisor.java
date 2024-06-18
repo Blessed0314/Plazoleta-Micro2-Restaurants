@@ -94,4 +94,39 @@ public class ControllerAdvisor {
         ));
     }
 
+    @ExceptionHandler(DishNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleDishNotFoundException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.DISH_NOT_FOUND_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(HaveOrderInProgressException.class)
+    public ResponseEntity<ExceptionResponse> handleHaveOrderInProgressException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.HAVE_ORDER_IN_PROGRESS_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleOrderNotFoundException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.ORDER_NOT_FOUND_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(WrongOrderException.class)
+    public ResponseEntity<ExceptionResponse> handleWrongOrderException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.WRONG_ORDER_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
 }

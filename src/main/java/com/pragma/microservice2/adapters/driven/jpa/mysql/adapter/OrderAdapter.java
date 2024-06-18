@@ -3,15 +3,21 @@ package com.pragma.microservice2.adapters.driven.jpa.mysql.adapter;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.entity.OrderEntity;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.entity.OrderItemEntity;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.exception.HaveOrderInProgressException;
+import com.pragma.microservice2.adapters.driven.jpa.mysql.exception.NullParametersException;
+import com.pragma.microservice2.adapters.driven.jpa.mysql.exception.OrderNotFoundException;
+import com.pragma.microservice2.adapters.driven.jpa.mysql.exception.WrongOrderException;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.IOrderEntityMapper;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.IOrderItemEntityMapper;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.mapper.ManualMapper;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IOrderItemRepository;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IOrderRepository;
+import com.pragma.microservice2.adapters.driving.http.controller.IFeignUserDataToSmsController;
+import com.pragma.microservice2.adapters.driving.http.dto.response.UserToSmsResponse;
 import com.pragma.microservice2.adapters.security.CustomUserDetail;
 import com.pragma.microservice2.domain.model.Order;
 import com.pragma.microservice2.domain.model.OrderItem;
 import com.pragma.microservice2.domain.spi.IOrderPersistencePort;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,14 +71,37 @@ public class OrderAdapter implements IOrderPersistencePort {
     @Override
     public List<Order> getAllOrders(Integer page, Integer size, String status) {
         Pageable pageable = PageRequest.of(page, size);
-        CustomUserDetail user = getUser();
+        CustomUserDetail employee = getUser();
         List<OrderEntity> orders = "all".equalsIgnoreCase(status)
-                ?orderRepository.findByDniOwner(user.getDniBoss(), pageable).getContent()
-                :orderRepository.findByDniOwnerAndStatus(user.getDniBoss(),status,pageable).getContent();
+                ?orderRepository.findByDniOwner(employee.getDniBoss(), pageable).getContent()
+                :orderRepository.findByDniOwnerAndStatus(employee.getDniBoss(),status,pageable).getContent();
 
         return orders.stream()
                 .map(manualMapper::toModel)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void patchOrderStatus(Long id) {
+
+        if(id == null){
+            throw new NullParametersException("Id must be provided");
+        }
+
+        OrderEntity order = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+        CustomUserDetail employee = getUser();
+
+        if(!employee.getDniBoss().equals(order.getRestaurant().getDniOwner())){
+            throw new WrongOrderException();
+        }
+
+        if(order.getStatus().equals("PENDING")){
+            order.setAssignedEmployee(employee.getDni());
+            order.setStatus("IN PROGRESS");
+        }
+
+        orderRepository.save(order);
     }
 
     private CustomUserDetail getUser() {

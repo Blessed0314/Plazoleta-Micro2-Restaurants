@@ -10,6 +10,7 @@ import com.pragma.microservice2.domain.api.IOrderItemServicePort;
 import com.pragma.microservice2.domain.api.IOrderServicePort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,13 @@ public class IOrderRestControllerAdapter {
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "all") String status){
         return ResponseEntity.ok(orderResponseMapper.toOrderResponseList(orderServicePort.getAllOrders(page, size, status)));
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> setStatusOrder(@PathVariable Long id){
+        orderServicePort.patchOrderStatus(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

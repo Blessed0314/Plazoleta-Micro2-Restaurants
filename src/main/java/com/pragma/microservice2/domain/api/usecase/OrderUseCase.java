@@ -23,4 +23,9 @@ public class OrderUseCase implements IOrderServicePort {
     public List<Order> getAllOrders(Integer page, Integer size, String status) {
         return orderPersistencePort.getAllOrders(page, size, status);
     }
+
+    @Override
+    public void patchOrderStatus(Long id) {
+        orderPersistencePort.patchOrderStatus(id);
+    }
 }

@@ -31,4 +31,6 @@ public class OrderEntity {
     private List<OrderItemEntity> orderItems = new ArrayList<>();
 
     private String status;
+
+    private String assignedEmployee = "";
 }
