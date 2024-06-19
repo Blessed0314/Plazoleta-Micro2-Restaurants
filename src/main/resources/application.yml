@@ -1,3 +1,4 @@
+
 server:
   port: 8091
 
@@ -10,6 +11,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
 
 security:
   jwt:

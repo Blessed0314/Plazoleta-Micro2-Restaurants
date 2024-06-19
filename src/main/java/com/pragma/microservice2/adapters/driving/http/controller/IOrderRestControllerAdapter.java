@@ -3,10 +3,8 @@ package com.pragma.microservice2.adapters.driving.http.controller;
 import com.pragma.microservice2.adapters.driving.http.dto.request.AddOrderRequest;
 import com.pragma.microservice2.adapters.driving.http.dto.response.OrderToClientResponse;
 import com.pragma.microservice2.adapters.driving.http.dto.response.OrderToEmployeeResponse;
-import com.pragma.microservice2.adapters.driving.http.mapper.IOrderItemRequestMapper;
 import com.pragma.microservice2.adapters.driving.http.mapper.IOrderRequestMapper;
 import com.pragma.microservice2.adapters.driving.http.mapper.IOrderResponseMapper;
-import com.pragma.microservice2.domain.api.IOrderItemServicePort;
 import com.pragma.microservice2.domain.api.IOrderServicePort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +23,10 @@ import java.util.List;
 public class IOrderRestControllerAdapter {
 
     private final IOrderServicePort orderServicePort;
-    private final IOrderItemServicePort orderItemServicePort;
 
     private final IOrderRequestMapper orderRequestMapper;
     private final IOrderResponseMapper orderResponseMapper;
 
-    private final IOrderItemRequestMapper orderItemRequestMapper;
 
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping("/")
@@ -49,9 +45,11 @@ public class IOrderRestControllerAdapter {
     }
 
     @PreAuthorize("hasRole('EMPLOYEE')")
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> setStatusOrder(@PathVariable Long id){
-        orderServicePort.patchOrderStatus(id);
+    @PatchMapping("/")
+    public ResponseEntity<Void> setStatusOrder(
+            @RequestParam Long idOrder,
+            @RequestParam(defaultValue = "") String code){
+        orderServicePort.patchOrderStatus(idOrder, code);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

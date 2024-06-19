@@ -7,5 +7,5 @@ import java.util.List;
 public interface IOrderServicePort {
     Order saveOrder(Order order);
     List<Order> getAllOrders(Integer page, Integer size, String status);
-    void patchOrderStatus(Long id);
+    void patchOrderStatus(Long id, String code);
 }

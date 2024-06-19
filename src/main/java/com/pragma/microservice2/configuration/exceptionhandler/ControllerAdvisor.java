@@ -129,4 +129,31 @@ public class ControllerAdvisor {
                 LocalDateTime.now()
         ));
     }
+
+    @ExceptionHandler(ProcessFailureException.class)
+    public ResponseEntity<ExceptionResponse> handleProcessFailureException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.PROCESS_FAILURE_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(WrongCodeException.class)
+    public ResponseEntity<ExceptionResponse> handleWrongCodeException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.WRONG_CODE_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(WrongOrderStatusException.class)
+    public ResponseEntity<ExceptionResponse> handleWrongOrderStatusException() {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                Constants.WRONG_ORDER_STATUS_EXCEPTION_MESSAGE,
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        ));
+    }
 }

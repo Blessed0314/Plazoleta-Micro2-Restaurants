@@ -25,7 +25,7 @@ public class OrderUseCase implements IOrderServicePort {
     }
 
     @Override
-    public void patchOrderStatus(Long id) {
-        orderPersistencePort.patchOrderStatus(id);
+    public void patchOrderStatus(Long id, String code) {
+        orderPersistencePort.patchOrderStatus(id, code);
     }
 }

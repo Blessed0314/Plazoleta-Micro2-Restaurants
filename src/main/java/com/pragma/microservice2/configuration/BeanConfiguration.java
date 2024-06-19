@@ -9,7 +9,8 @@ import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IDishReposi
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IOrderItemRepository;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IOrderRepository;
 import com.pragma.microservice2.adapters.driven.jpa.mysql.repository.IRestaurantRepository;
-import com.pragma.microservice2.adapters.driving.http.controller.IFeignUserDataToSmsController;
+import com.pragma.microservice2.adapters.driving.http.FeignClient.services.SmsService;
+import com.pragma.microservice2.adapters.driving.http.FeignClient.services.UserService;
 import com.pragma.microservice2.domain.api.IDishServicePort;
 import com.pragma.microservice2.domain.api.IOrderItemServicePort;
 import com.pragma.microservice2.domain.api.IOrderServicePort;
@@ -44,6 +45,9 @@ public class BeanConfiguration {
 
     private final ManualMapper manualMapper;
 
+    private final UserService userService;
+    private final SmsService smsService;
+
 
     @Bean
     public IRestaurantPersistencePort restaurantPersistencePort() {
@@ -74,7 +78,7 @@ public class BeanConfiguration {
 
     @Bean
     public IOrderPersistencePort orderPersistencePort() {
-        return new OrderAdapter(orderRepository, orderEntityMapper, orderItemRepository, orderItemEntityMapper, manualMapper);
+        return new OrderAdapter(orderRepository, orderEntityMapper, orderItemRepository, orderItemEntityMapper, manualMapper, userService, smsService);
     }
     @Bean
     public IOrderServicePort orderServicePort() {

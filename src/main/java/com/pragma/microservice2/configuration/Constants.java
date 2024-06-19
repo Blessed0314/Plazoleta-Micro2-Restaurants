@@ -15,4 +15,7 @@ public class Constants {
     public static final String HAVE_ORDER_IN_PROGRESS_EXCEPTION_MESSAGE = "You already have an order in progress";
     public static final String ORDER_NOT_FOUND_EXCEPTION_MESSAGE = "This order not found";
     public static final String DISH_NOT_FOUND_EXCEPTION_MESSAGE = "This dish not found";
+    public static final String PROCESS_FAILURE_EXCEPTION_MESSAGE ="The process has failed, try again later";
+    public static final String WRONG_CODE_EXCEPTION_MESSAGE = "The code is incorrect";
+    public static final String WRONG_ORDER_STATUS_EXCEPTION_MESSAGE = "The order status must be 'PENDING', 'IN_PROGRESS' or 'READY'";
 }
